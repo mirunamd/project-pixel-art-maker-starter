@@ -1,11 +1,15 @@
 body {
     text-align: center;
+    background-image: url("https://cdn-images-1.medium.com/max/1920/1*AcYLHh0_ve4TNRi6HLFcPA.jpeg");
+    color: white;
 }
 
 h1 {
     font-family: Monoton;
     font-size: 70px;
     margin: 0.2em;
+    color: lightblue;
+    text-shadow: 3px 2px gray;
 }
 
 h2 {
