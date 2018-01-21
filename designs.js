@@ -57,10 +57,11 @@ $('.pixel_canvas').mousedown(function(e){
                 picker = false;
                 $('.pixel_canvas').css('cursor', 'default');
                 $('#colorPicker').val(color);
+                $(".picker-tool-change").toggleClass("picker");
                 return;
         }	
         if(bucket){
-		//console.log("bucket tool initiated");
+        //console.log("bucket tool initiated");
 
         var x = e.target.parentNode.rowIndex;
 	var y = e.target.cellIndex;
@@ -69,6 +70,7 @@ $('.pixel_canvas').mousedown(function(e){
 		bucketTool(x, y, currColor, color);
 		bucket = false;
 		$('.pixel_canvas').css('cursor', 'default');
+                $(".bucket-tool-change").toggleClass("bucket-tool");
         return;
 	}
 
@@ -95,6 +97,7 @@ $('.pixel_canvas').mouseup(function(e){
         eraser = false;
         color = $('#colorPicker').val();
         $('.pixel_canvas').css('cursor', 'default');
+        $(".eraser-tool-change").toggleClass("eraser");
     }
 });
 
@@ -128,6 +131,7 @@ function displayHelperPopUp() {
 $('.bucket-tool').click(function(){
 	$('.pixel_canvas').css('cursor', 'url(cursor.cur) 1 14, auto');
 	bucket = true;
+        $(".bucket-tool-change").toggleClass("bucket-tool");
 });
 
 function bucketTool(x, y, oldc, newc){
@@ -175,10 +179,13 @@ function hex(x) {
 $('.eraser').click(function(){
 	$('.pixel_canvas').css('cursor', 'url(eraser.cur) 10 5, auto');
 	eraser = true;
+        //console.log("eraser event");
+        $(".eraser-tool-change").toggleClass("eraser");
 });
 
 // color picker event
 $('.picker').click(function(){
 	$('.pixel_canvas').css('cursor', 'url(picker.cur) 2 15, auto');
 	picker = true;
+        $(".picker-tool-change").toggleClass("picker");
 });

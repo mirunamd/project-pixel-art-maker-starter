@@ -2,6 +2,7 @@ body {
     text-align: center;
     background-image: url("https://cdn-images-1.medium.com/max/1920/1*AcYLHh0_ve4TNRi6HLFcPA.jpeg");
     color: white;
+    text-shadow: 3px 2px 5px #82c5f3;
 }
 
 h1 {
@@ -9,7 +10,7 @@ h1 {
     font-size: 70px;
     margin: 0.2em;
     color: lightblue;
-    text-shadow: 3px 2px gray;
+    -webkit-text-stroke: 1px #2692a8;
 }
 
 h2 {
@@ -65,12 +66,26 @@ input[type=number] {
     to {opacity:1 ;}
 }
 
-.bucket-tool{
-		position: relative;
-    top: 25%;
+.tools{
+    height: 20px;
+    width: 20px;
 }
 
-.tools{
-		height: 20px;
-    width: 20px;
+.eraser-tool-change{
+   box-shadow: inset 5px 5px 5px #82c5f3;
+}
+.picker-tool-change{
+   box-shadow: inset 5px 5px 5px #82c5f3;
+}
+.bucket-tool-change{
+   box-shadow: inset 5px 5px 5px #82c5f3;
+}
+.eraser{
+  box-shadow: none;
+}
+.bucket-tool{
+  box-shadow: none;
+}
+.picker{
+  box-shadow: none;
 }
