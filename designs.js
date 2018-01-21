@@ -16,7 +16,7 @@ $('#sub').click(function(){
 function makeGrid(h, w) {
 	if(tableCreated === true)
 		clearTable();
-	var table = $('#pixel_canvas');
+	var table = $('.pixel_canvas');
 	for(var i = 0; i < h; i ++){
 		var row = $('<tr>').attr("class", "table");
      		setColor(row, "white");
@@ -37,7 +37,7 @@ $('#colorPicker').mouseleave(function(){
 });
 
 // Changes color according to what the user selected
-$('#pixel_canvas').mousedown(function(e){
+$('.pixel_canvas').mousedown(function(e){
 	var cell = $(e.target);
 	setColor(cell, color);
 				
@@ -47,7 +47,7 @@ $('#pixel_canvas').mousedown(function(e){
 	});
 });
 
-$('#pixel_canvas').mouseup(function(e){
+$('.pixel_canvas').mouseup(function(e){
 	$(this).unbind("mouseover");
 });
 
@@ -57,7 +57,7 @@ function setColor(cell, color){
 }
 
 // Changes color back to white
-$('#pixel_canvas').dblclick(function(event){	
+$('.pixel_canvas').dblclick(function(event){	
 	var cell = $(event.target);
 	cell.css("background-color", "white");
 });
@@ -67,3 +67,17 @@ $('#pixel_canvas').dblclick(function(event){
 function clearTable(){
 	$(".table").remove();
 }
+
+var firstTime = true;
+function pop() {
+	console.log(firstTime);
+	if(firstTime === true){
+    	var pup = document.getElementById("helper_popup");
+   		pup.classList.toggle("show");
+		firstTime = false;
+		$('.pixel_canvas').click(function(){	
+			pup.classList.toggle("hide");
+		});
+	}
+}
+
