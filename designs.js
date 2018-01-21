@@ -5,6 +5,7 @@ var w = $('#input_width').val();
 makeGrid(h, w);
 var bucket = false;// bucket intiated
 var eraser = false; 
+var picker = false; // color picker
 var tbl_matrix;
 var dirX = [-1, -1, -1, 0, 0, 0, 1, 1, 1];
 var dirY = [-1, 0, 1, -1, 0, 1, -1, 0, 1];
@@ -51,11 +52,18 @@ $('#colorPicker').mouseleave(function(){
 
 // Changes color according to what the user selected
 $('.pixel_canvas').mousedown(function(e){
-	if(bucket){
+        if(picker){
+                color = toHex($(e.target).css('background-color'));
+                picker = false;
+                $('.pixel_canvas').css('cursor', 'default');
+                $('#colorPicker').val(color);
+                return;
+        }	
+        if(bucket){
 		//console.log("bucket tool initiated");
 
         var x = e.target.parentNode.rowIndex;
-	    var y = e.target.cellIndex;
+	var y = e.target.cellIndex;
         var currColor = toHex(tbl_matrix[x][y].css('background-color'));
 
 		bucketTool(x, y, currColor, color);
@@ -66,6 +74,7 @@ $('.pixel_canvas').mousedown(function(e){
 
     if(eraser){
         color = "#ffffff";
+        //console.log("eraser");
     }
 	
 	displayHelperPopUp();
@@ -166,4 +175,10 @@ function hex(x) {
 $('.eraser').click(function(){
 	$('.pixel_canvas').css('cursor', 'url(eraser.cur) 10 5, auto');
 	eraser = true;
+});
+
+// color picker event
+$('.picker').click(function(){
+	$('.pixel_canvas').css('cursor', 'url(picker.cur) 2 15, auto');
+	picker = true;
 });
