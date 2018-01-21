@@ -3,7 +3,8 @@ var color = "#000000";
 var h = $('#input_height').val();
 var w = $('#input_width').val();
 makeGrid(h, w);
-var bucket = false; // bucket intiated
+var bucket = false;// bucket intiated
+var eraser = false; 
 var tbl_matrix;
 var dirX = [-1, -1, -1, 0, 0, 0, 1, 1, 1];
 var dirY = [-1, 0, 1, -1, 0, 1, -1, 0, 1];
@@ -62,6 +63,10 @@ $('.pixel_canvas').mousedown(function(e){
 		$('.pixel_canvas').css('cursor', 'default');
         return;
 	}
+
+    if(eraser){
+        color = "#ffffff";
+    }
 	
 	displayHelperPopUp();
 
@@ -76,6 +81,12 @@ $('.pixel_canvas').mousedown(function(e){
 
 $('.pixel_canvas').mouseup(function(e){
 	$(this).unbind("mouseover");
+
+    if(eraser){
+        eraser = false;
+        color = $('#colorPicker').val();
+        $('.pixel_canvas').css('cursor', 'default');
+    }
 });
 
 function setColor(cell, color){
@@ -150,3 +161,9 @@ function toHex(rgb) {
 function hex(x) {
   return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
 }
+
+// eraser event
+$('.eraser').click(function(){
+	$('.pixel_canvas').css('cursor', 'url(eraser.cur) 10 5, auto');
+	eraser = true;
+});
