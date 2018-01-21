@@ -38,6 +38,8 @@ $('#colorPicker').mouseleave(function(){
 
 // Changes color according to what the user selected
 $('.pixel_canvas').mousedown(function(e){
+	displayHelperPopUp();
+
 	var cell = $(e.target);
 	setColor(cell, color);
 				
@@ -68,16 +70,13 @@ function clearTable(){
 	$(".table").remove();
 }
 
-var firstTime = true;
-function pop() {
-	console.log(firstTime);
-	if(firstTime === true){
-    	var pup = document.getElementById("helper_popup");
-   		pup.classList.toggle("show");
-		firstTime = false;
-		$('.pixel_canvas').click(function(){	
-			pup.classList.toggle("hide");
-		});
-	}
+var firstTime = true; // helper popup is displayed for the first time
+function displayHelperPopUp() {
+	if(firstTime === false) return;
+   	$(".popup").show(); 
+/*  setTimeout(function() {
+      	$(".popup").hide();
+   	}, 3000);
+*/
+	firstTime = false;
 }
-
