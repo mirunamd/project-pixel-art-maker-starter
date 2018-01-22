@@ -88,7 +88,6 @@ $('.pixel_canvas').mousedown(function(e) {
 
     if(rainbow){
         rainbow = false;
-        $(".rainbow-tool-change").toggleClass("rainbow");
         $('.pixel_canvas').css('cursor', 'default');
         $('.cat_gif').css('visibility', 'visible');
         
@@ -116,6 +115,7 @@ $('.pixel_canvas').mouseup(function(e) {
     if(audioPlays){        
         stopAudio();
         $('.cat_gif').css('visibility', 'hidden');
+        $(".rainbow-tool-change").toggleClass("rainbow");
     }
 
     if (eraser) {
