@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Pixel Art Maker!</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <h1>Lab: Pixel Art Maker</h1>
+    <img src="emoji.gif" class="cat_gif" align="right">
 
     <h2>Choose Grid Size</h2>
     <form id="sizePicker" onsubmit="return false;">
         Grid Height:
-        <input type="number" id="input_height" name="height" min="1" value="10">
-        Grid Width:
-        <input type="number" id="input_width" name="width" min="1" value="10">
-        <input type="submit" id="sub" >
+        <input type="number" id="input_height" name="height" min="1" max="300" value="10"> Grid Width:
+        <input type="number" id="input_width" name="width" min="1" max="300" value="10">
+        <input type="submit" id="sub">
     </form>
 
     <h2>Tools</h2>
-	<div>
-    	<input type="color" id="colorPicker">
-        <button type="button" class="bucket-tool bucket-tool-change"><img class="tools" src="http://icons.iconarchive.com/icons/icons8/windows-8/512/Diy-Paint-Bucket-icon.png"/></button>
-        <button type="button" class="eraser eraser-tool-change"><img class="tools" src="eraser.png"/></button>
-        <button type="button" class="picker picker-tool-change"><img class="tools" src="picker.png"/></button>
-	</div>
+    <div>
+        <button type="button" class="rainbow rainbow-tool-change" alt="rainbow tool"><img class="tools rainbow-img" src="rainbow.png"/></button>
+        <button type="button" class="bucket-tool bucket-tool-change"><img class="tools" src="http://icons.iconarchive.com/icons/icons8/windows-8/512/Diy-Paint-Bucket-icon.png" /></button>
+        <button type="button" class="eraser eraser-tool-change"><img class="tools" src="eraser.png" /></button>
+        <button type="button" class="picker picker-tool-change"><img class="tools" src="picker.png" /></button>
+        <input type="color" id="colorPicker">
+    </div>
     <h2>Design Canvas</h2>
     <table class="pixel_canvas">
-		<ul class="popup"> Tips:
-		<li> Hold mouse to create a continous line. </li>
-		<li> Double click to remove changes. </li>
-		</ul> 
-	</table>
-
+        <ul class="popup"> Tips:
+            <li> Hold mouse to create a continous line. </li>
+            <li> Double click to remove changes. </li>
+            <li> After clicking the eraser, hold to use it. </li>
+            <li> Press submit to start a new canvas. </li>
+        </ul>
+    </table>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="designs.js"></script>
 </body>
+
 </html>

@@ -45,47 +45,82 @@ input[type=number] {
 }
 
 .popup {
-		display: none;
-		font-size: 22px;
-		position: absolute;
-		text-align: left;
+    display: none;
+    font-size: 20px;
+    position: absolute;
+    text-align: left;
     right: 2%;
-    top: 30%;
+    top: 15%;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s
 }
 
+
 /* Add animation (fade in the popup) */
+
 @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-.tools{
+.tools {
     height: 20px;
     width: 20px;
 }
 
-.eraser-tool-change{
-   box-shadow: inset 5px 5px 5px #82c5f3;
+
+.eraser-tool-change {
+    box-shadow: inset 5px 5px 5px #82c5f3;
 }
-.picker-tool-change{
-   box-shadow: inset 5px 5px 5px #82c5f3;
+
+.picker-tool-change {
+    box-shadow: inset 5px 5px 5px #82c5f3;
 }
-.bucket-tool-change{
-   box-shadow: inset 5px 5px 5px #82c5f3;
+
+.bucket-tool-change {
+    box-shadow: inset 5px 5px 5px #82c5f3;
 }
-.eraser{
-  box-shadow: none;
+
+.eraser {
+    box-shadow: none;
 }
-.bucket-tool{
-  box-shadow: none;
+
+.bucket-tool {
+    box-shadow: none;
 }
-.picker{
-  box-shadow: none;
+
+.picker {
+    box-shadow: none;
 }
+
+.rainbow-tool-change{
+    box-shadow: inset 5px 5px 5px #82c5f3;
+}
+
+.rainbow{
+    box-shadow: none;
+
+}
+
+.cat_gif{
+  position: absolute;
+  left: 0px;
+  width:200px;
+  height:200px;
+  visibility: hidden;
+}
+
+
