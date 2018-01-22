@@ -12,15 +12,8 @@ var dirX = [-1, -1, -1, 0, 0, 0, 1, 1, 1];
 var dirY = [-1, 0, 1, -1, 0, 1, -1, 0, 1];
 var color_arr = ["#f64444", "#f69f44", "#f6ea44", "#53c82b", "#2dccf2", "#2d31f2", "#9445f0"];
 var audioPlays = false;
-var audio = new Audio('nyan.mp3');     
-
-// Select size input
-$('#sub').click(function() {
-    h = $('#input_height').val();
-    w = $('#input_width').val();
-    // When size is submitted by the user, call makeGrid()
-    makeGrid(h, w);
-});
+var audio = new Audio('nyan.mp3');
+var lastButtonPressed = null;  
 
 // Generates the grid dynamically
 function makeGrid(h, w) {
@@ -48,94 +41,10 @@ function makeGrid(h, w) {
     //console.log("table generated successfully");
 }
 
-// Select color input
-$('#colorPicker').mouseleave(function() {
-    color = $(this).val();
-    //console.log("color picked");
-});
-
-// Changes color according to what the user selected
-$('.pixel_canvas').mousedown(function(e) {
-    if (picker) {
-        color = toHex($(e.target).css('background-color'));
-        picker = false;
-        $('.pixel_canvas').css('cursor', 'default');
-        $('#colorPicker').val(color);
-        $(".picker-tool-change").toggleClass("picker");
-        return;
-    }
-    if (bucket) {
-        //console.log("bucket tool initiated");
-
-        var x = e.target.parentNode.rowIndex;
-        var y = e.target.cellIndex;
-        var currColor = toHex(tbl_matrix[x][y].css('background-color'));
-
-        bucketTool(x, y, currColor, color);
-        bucket = false;
-        $('.pixel_canvas').css('cursor', 'default');
-        $(".bucket-tool-change").toggleClass("bucket-tool");
-        return;
-    }
-
-    if (eraser) {
-        color = "#ffffff";
-        //console.log("eraser");
-    }
-
-    displayHelperPopUp();
-    var cell = $(e.target);
-
-    if(rainbow){
-        rainbow = false;
-        $('.pixel_canvas').css('cursor', 'default');
-        $('.cat_gif').css('visibility', 'visible');
-        
-        playAudio();
- 
-        var i = 1;
-        setColor(cell, "red");
-        $(this).mouseover(function(e) {
-                var cell = $(e.target);
-                setColor(cell, color_arr[(i%7)]);
-                i++;
-         });
-        return;
-    }
-    
-    setColor(cell, color);
-    $(this).mouseover(function(e) {
-        var cell = $(e.target);
-        setColor(cell, color);
-    });
-});
-
-$('.pixel_canvas').mouseup(function(e) {
-    $(this).unbind("mouseover");
-    if(audioPlays){        
-        stopAudio();
-        $('.cat_gif').css('visibility', 'hidden');
-        $(".rainbow-tool-change").toggleClass("rainbow");
-    }
-
-    if (eraser) {
-        eraser = false;
-        color = $('#colorPicker').val();
-        $('.pixel_canvas').css('cursor', 'default');
-        $(".eraser-tool-change").toggleClass("eraser");
-    }
-});
-
 function setColor(cell, color) {
     cell.css("background-color", color);
     //console.log("color set to:" + color);
 }
-
-// Changes color back to white
-$('.pixel_canvas').dblclick(function(event) {
-    var cell = $(event.target);
-    cell.css("background-color", "white");
-});
 
 // Clears the table
 function clearTable() {
@@ -150,13 +59,6 @@ function displayHelperPopUp() {
        	}, 3000);
     */
 }
-
-// bucket function
-$('.bucket-tool').click(function() {
-    $('.pixel_canvas').css('cursor', 'url(cursor.cur) 1 14, auto');
-    bucket = true;
-    $(".bucket-tool-change").toggleClass("bucket-tool");
-});
 
 function bucketTool(x, y, oldc, newc) {
     if (oldc === newc) return;
@@ -184,7 +86,6 @@ function bucketTool(x, y, oldc, newc) {
 }
 
 // converts to hex
-
 var hexDigits = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
 
 //Function to convert rgb color to hex format
@@ -198,27 +99,153 @@ function hex(x) {
     return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
 }
 
+// Select size input
+$('#sub').click(function() {
+    h = $('#input_height').val();
+    w = $('#input_width').val();
+    // When size is submitted by the user, call makeGrid()
+    makeGrid(h, w);
+});
+
+// Select color input
+$('#colorPicker').mouseleave(function() {
+    color = $(this).val();
+    //console.log("color picked");
+});
+
+// Changes color according to what the user selected
+$('.pixel_canvas').mousedown(function(e) {
+    displayHelperPopUp();
+
+    if (picker) {
+        color = toHex($(e.target).css('background-color'));
+        picker = false;
+        $('.pixel_canvas').css('cursor', 'default');
+        $('#colorPicker').val(color);
+        $(".picker-change").toggleClass("picker");
+        return;
+    }
+    if (bucket) {
+        //console.log("bucket tool initiated");
+
+        var x = e.target.parentNode.rowIndex;
+        var y = e.target.cellIndex;
+        var currColor = toHex(tbl_matrix[x][y].css('background-color'));
+
+        bucketTool(x, y, currColor, color);
+        bucket = false;
+        $('.pixel_canvas').css('cursor', 'default');
+        $(".bucket-tool-change").toggleClass("bucket-tool");
+        return;
+    }
+
+    if (eraser) {
+        color = "#ffffff";
+        //console.log("eraser");
+    }
+
+    var cell = $(e.target);
+
+    if(rainbow){
+        rainbow = false;
+        $('.cat_gif').css('visibility', 'visible');
+        
+        playAudio();
+ 
+        var i = 1;
+        setColor(cell, "red");
+        $(this).mouseover(function(e) {
+                var cell = $(e.target);
+                setColor(cell, color_arr[(i%7)]);
+                i++;
+         });
+        $('.pixel_canvas').css('cursor', 'default');
+        return;
+    }
+    
+    setColor(cell, color);
+    $(this).mouseover(function(e) {
+        var cell = $(e.target);
+        setColor(cell, color);
+    });
+});
+
+$('.pixel_canvas').mouseup(function(e) {
+    $(this).unbind("mouseover");
+    if(audioPlays){        
+        stopAudio();
+        $('.cat_gif').css('visibility', 'hidden');
+        $(".rainbow-change").toggleClass("rainbow");
+    }
+
+    if (eraser) {
+        eraser = false;
+        color = $('#colorPicker').val();
+        $('.pixel_canvas').css('cursor', 'default');
+        $(".eraser-change").toggleClass("eraser");
+    }
+});
+
+// Changes color back to white
+$('.pixel_canvas').dblclick(function(event) {
+    var cell = $(event.target);
+    cell.css("background-color", "white");
+});
+
+// bucket event
+$('.bucket-tool').click(function(e) {
+    changeButton(e);
+        
+    $('.pixel_canvas').css('cursor', 'url(cursor.cur) 1 14, auto');
+    bucket = true;
+    $(".bucket-tool-change").toggleClass("bucket-tool");  
+    lastButtonPressed = "bucket-tool";
+});
+
 // eraser event
-$('.eraser').click(function() {
+$('.eraser').click(function(e) {
+    changeButton(e);    
+        
     $('.pixel_canvas').css('cursor', 'url(eraser.cur) 10 5, auto');
     eraser = true;
     //console.log("eraser event");
-    $(".eraser-tool-change").toggleClass("eraser");
+    $(".eraser-change").toggleClass("eraser");
+    lastButtonPressed = "eraser";
 });
 
 // color picker event
-$('.picker').click(function() {
+$('.picker').click(function(e) {
+    changeButton(e);
+
     $('.pixel_canvas').css('cursor', 'url(picker.cur) 2 15, auto');
     picker = true;
-    $(".picker-tool-change").toggleClass("picker");
+    $(".picker-change").toggleClass("picker");
+    lastButtonPressed = "picker";
 });
 
 // rainbow event
-$('.rainbow').click(function() {
-    $('.pixel_canvas').css('cursor', 'url(rainbow.cur) 10 5, auto');
+$('.rainbow').click(function(e) {
+    changeButton(e);
+        
     rainbow = true;
-    $(".rainbow-tool-change").toggleClass("rainbow");
+    $('.pixel_canvas').css('cursor', 'url(rainbow.cur) 10 5, auto');
+    $(".rainbow-change").toggleClass("rainbow");
+    lastButtonPressed = "rainbow";
 });
+
+// changeButton
+function changeButton(e){   
+    var anyButtonPressed = bucket || eraser || picker;
+    if(anyButtonPressed && lastButtonPressed !== null){
+        var toToggle = "." + lastButtonPressed + "-change";
+        $(toToggle).toggleClass(lastButtonPressed);
+        if(picker)
+                picker = false;
+        if(bucket) bucket = false;
+        if(eraser) eraser = false;
+        //console.log(toToggle);
+    }
+}
 
 // audio 
 

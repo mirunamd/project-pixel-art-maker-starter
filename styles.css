@@ -82,11 +82,11 @@ input[type=number] {
 }
 
 
-.eraser-tool-change {
+.eraser-change {
     box-shadow: inset 5px 5px 5px #82c5f3;
 }
 
-.picker-tool-change {
+.picker-change {
     box-shadow: inset 5px 5px 5px #82c5f3;
 }
 
@@ -106,7 +106,7 @@ input[type=number] {
     box-shadow: none;
 }
 
-.rainbow-tool-change{
+.rainbow-change{
     box-shadow: inset 5px 5px 5px #82c5f3;
 }
 
